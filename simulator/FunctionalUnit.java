@@ -1,0 +1,77 @@
+public abstract class FuncionalUnit {
+	private ArrayList<Station> reservationStations;	
+	private int numReservationStations; 
+	private int exCyclesNeeded;
+	private int currentInstruction;
+	private boolean busy;
+	private int cyclesLeft;
+
+	public int findInstructionToExecute() {
+		for (int i = 0; i < this.reservationStations.size(); ++i) {
+			if (!reservationStations.get(i).busy) {
+				return i;	
+			}
+		}
+		return -1;
+	}
+	
+	public void execute() {
+		Station station;
+		if (!this.busy) {
+			int i;
+			if ((i = this.findInstructionToExecute()) != -1) {
+				this.currentInstruction = i;
+				this.busy = true;
+				this.cyclesLeft = this.exCyclesNeeded;
+				station = this.reservationStations.get(i);
+				// TODO: Is station.operation the correct thing to pass here?
+				StatusTable.getInstance().addInstruction(station.operation, station.name);
+			} 
+		} else if (--this.cyclesLeft == 0){
+				station = this.reservationStations.get(this.currentInstruction);
+				station.resultReady = true;
+				int result = this.computeResult(station);
+				StatusTable.getInstance().updateEndEX(station.name)
+		}
+	}
+
+	public int findInstructionToWrite() {
+		for (int i = 0; i < this.reservationStations.size(); ++i)
+			if (this.reservationStations.get(i).resultReady) 
+				return i;
+		return -1;
+	}
+
+	public void updateReservationStations(CDB cdb) {
+		for (Station station : this.reservationStations) {
+			if (station.Qj == cdb.source) {
+				station.Vj = cdb.data;
+			} 
+			if (station.Qk == cdb.source) {
+				station.Vk = cdb.data;
+			}
+		}
+	}
+	public void dump() {
+
+		for (Station station : this.reservationStations) 
+			station.dump();
+	}
+
+	public void cdbWrite() {
+		int i;
+		if ((i = this.findInstructionToWrite()) == -1) 
+			return;
+		Station station = this.reservationStations.get(i);
+
+		CDB cdb = CDB.getInstance();
+		if (cdb.busy)
+			return;
+
+		cdb.busy = true;	
+		cdb.source = station.name;
+		cdb.data = station.result;
+	}
+
+	public abstract long computeResult(Station station);
+}
