@@ -28,18 +28,41 @@ public class Simulator
         boolean halt = false;
         //this will be your driver loop which will execute until
         //the halt is executed
+	// TODO: Instantiate CDB
+	// TODO: Instiate FUs 
+	// TODO: Detect when stall is called for, 
+	// that is, when no functional unit was able to accept the instruction
+	CDB cdb = CDB.getInstance();
         while (halt == false)
         {
+	    boolean stall = true;
+	    // ISSUE
+	    // for (FU fu : FUS) {
+	    // 	stall =  stall && fu.tryIssueInstruction(instruction)
+	    // }
+	    // EXECUTE
+	    // TODO: Check FUs for values to write on the CDB, but only one
+	    // for (FU fu : FUS) {
+	    // 	fu.execute(instruction, cdb, ...)
+	    // }
+	    //
+	    // 
+	    //
+	    // WRITEBACK
+	    // for (FU fu : FUS) {
+	    // 	fu.tryWrite(instruction, cdb, ...)
+	    // }
 
-            //leave this call in for the gui, but make sure that the 
-            //instruction, PC, CDB result and CDB result are set
-            //properly
+	    if (!stall) {
+		// TODO: Get next instruction 
+	    }
+
+	    cdb.busy = false;
             if (gui) addSnapShot(instruction, PC, cdbResult, cdbSrc);
         }
         if (gui == true) new TSGui(snapshots);
     }
-
-
+	
     //This method is for the GUI, do not modify this
     public void addSnapShot(int instr, int PCValue, 
                             long cdbValue, String cdbSrc)
