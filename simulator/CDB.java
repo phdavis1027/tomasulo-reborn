@@ -11,9 +11,9 @@ public class CDB {
 		this.busy = false;
 	}
 
-	public CDB getInstance() {
+	public static CDB getInstance() {
 		if (instance == null)
-			this.instance = CDB()
+			instance = CDB();
 		return CDB;
 	}
 }

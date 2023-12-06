@@ -39,7 +39,7 @@ public abstract class FuncionalUnit {
 				station = this.reservationStations.get(this.currentInstruction);
 				station.resultReady = true;
 				int result = this.computeResult(station);
-				StatusTable.getInstance().updateEndEX(station.name)
+				StatusTable.getInstance().updateEndEX(station.name);
 		}
 	}
 
