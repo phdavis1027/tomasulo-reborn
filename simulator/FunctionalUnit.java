@@ -6,16 +6,20 @@ public abstract class FuncionalUnit {
 	private int cyclesLeft;
 
 	// TODO: Write a clockCycle method to capture everything that should on a clock tick
+    //
 	// no cycle high/cycle low, that's for nerds
 	
 	public boolean tick(CDB cdb) {
-		if (!cdb.busy) {
+        // Also need to pull arguments off the CDB for reservation stations
+        this.updateReservationStations(cdb);
 
+		if (!cdb.busy) {
 		}
 	}
 
 	public int findInstructionToExecute() {
 		for (int i = 0; i < this.reservationStations.size(); ++i) {
+            // TODO: Need to check if the instruction has all it's parameters before executing
 			if (!reservationStations.get(i).busy) {
 				return i;	
 			}
