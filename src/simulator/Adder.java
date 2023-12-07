@@ -12,4 +12,7 @@ public class Adder extends FunctionalUnit {
 				return 0;
 		}
 	}
+
+	@Override
+	public boolean tryIssueInstruction();
 }

@@ -2,6 +2,46 @@ package simulator;
 
 public class Tools
 {
+
+    public static final String ARITHMETIC = "ARITHMETIC_TYPE";
+    public static final String ADD_IMMEDIATE = "ADD_IMMEDIATE";
+    public static final String ADD_IMMEDIATE_UNSIGNED = "ADD_IMMEDIATE_UNSIGNED";
+
+    public static final String DADD = "DADD";
+    public static final String DSUB = "DSUB"; 
+    public static final String MULD = "MUL.D";
+    public static final String DIVD = "DIV.D";
+
+    public static String opcode(int instruction) {
+	switch((instruction & 0xFF000000) >> 24) {
+		case 0x00:
+			return ARITHMETIC;
+		case 0x24:
+			return ADD_IMMEDIATE;
+		case 0x25:
+			return ADD_IMMEDIATE_UNSIGNED;
+		default:
+			return  "";
+	}
+    }
+
+    public static String functionCode(int instruction) { 
+	    String opcode = Tools.opcode();
+	    if (!Tools.opcode(instruction) != "ARITHMETIC_TYPE") 
+		return "";
+
+	    switch ((instruction & 0x00FF0000) >> 16) {
+		case 0x44:
+			return DADD;
+		case 0x46:
+			return DSUB;
+		case 0x47:
+			return ;
+
+
+	    }
+    }
+
     //grabs and returns the bits between start and end of value
     //uses big endian bit numbering (high order bit is bit zero)
     public static int grabBits(int value, int start, int end)
