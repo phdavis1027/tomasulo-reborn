@@ -4,7 +4,7 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,6 +1,7 @@
 package com.aperturelabs.app.simulator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class FunctionalUnit {
     private ArrayList<Station> reservationStations;
@@ -38,7 +39,8 @@ public abstract class FunctionalUnit {
         } else if (--this.cyclesLeft == 0) {
             station = this.reservationStations.get(this.currentInstruction);
             station.resultReady = true;
-            int result = this.computeResult(station);
+            long result = this.computeResult(station);
+            station.result = result;
             StatusTable.getInstance().updateEndEX(station.name);
         }
     }
@@ -48,7 +50,7 @@ public abstract class FunctionalUnit {
      */
     public int findInstructionToWrite() {
         for (int i = 0; i < this.reservationStations.size(); ++i) {
-            Station station = this.reservationStations.get(i);
+            Station s = this.reservationStations.get(i);
             if (s.resultReady && !s.resultWritten) {
                 return i;
             }
@@ -83,16 +85,13 @@ public abstract class FunctionalUnit {
      * Write the result of the current instruction to the CDB
      */
     public void cdbWrite() {
+        CDB cdb = CDB.getInstance();
         if (cdb.busy)
             return;
         int i;
         if ((i = this.findInstructionToWrite()) == -1)
             return;
         Station station = this.reservationStations.get(i);
-
-        CDB cdb = CDB.getInstance();
-        if (cdb.busy)
-            return;
 
         cdb.busy = true;
         cdb.source = station.name;
@@ -106,18 +105,20 @@ public abstract class FunctionalUnit {
      *
      * This should be reimplemented in the concrete classes
      */
-	public abstract long computeResult(Station station);
+    public abstract long computeResult(Station station);
 
-	/* Returns true if the instruction is successfully issued
-	 * */
+    /*
+     * Returns true if the instruction is successfully issued
+     */
 
-	public abstract HashSet<String> operations(); 
+    public abstract HashSet<String> operations();
 
     /**
      * Try to issue an instruction to the reservation stations
      */
-	public boolean tryIssueInstruction(int instruction){
-		if (!this.operations().contains(Tools.opcode(instruction)))
-			return false;
-	}
+    public boolean tryIssueInstruction(int instruction) {
+        if (!this.operations().contains(Tools.opcode(instruction)))
+            return false;
+        return false;
+    }
 }

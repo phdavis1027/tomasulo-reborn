@@ -5,11 +5,11 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.util.HashMap;
 
-import simulator.Tools;
+import com.aperturelabs.app.simulator.Tools;
 
 public class Decoder {
 

@@ -5,7 +5,7 @@
  * 
  * Author:	Stephen Ellison, Jr.
  */
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

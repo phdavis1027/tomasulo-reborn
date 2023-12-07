@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 import java.util.*;
 import java.io.*;
 

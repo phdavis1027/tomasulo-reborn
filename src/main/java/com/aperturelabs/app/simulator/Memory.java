@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 import java.io.*;
 
 //This class is incomplete.  You'll still need methods for

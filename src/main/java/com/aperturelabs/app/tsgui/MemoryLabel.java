@@ -4,7 +4,7 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 
 public class MemoryLabel{

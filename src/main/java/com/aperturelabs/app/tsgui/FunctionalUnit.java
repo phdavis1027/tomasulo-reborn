@@ -6,7 +6,7 @@
  * Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 /**
  * This class is designed to provide a graphical container to put information regarding the functional

@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 //class to represent the Floating Point Registers
 public class FPR extends Registers

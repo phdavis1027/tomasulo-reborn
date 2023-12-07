@@ -6,7 +6,7 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.awt.Component;
 import java.awt.Dimension;

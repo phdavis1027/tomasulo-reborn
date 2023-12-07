@@ -6,7 +6,7 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import tsgui.CycleSnapShot;
+import com.aperturelabs.app.tsgui.*;
 
 
 public class Canvas extends JPanel{

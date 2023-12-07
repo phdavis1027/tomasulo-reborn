@@ -5,9 +5,9 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
-import simulator.Station;
+import com.aperturelabs.app.simulator.Station;
 
 public class StationImage {
 

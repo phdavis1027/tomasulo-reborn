@@ -1,10 +1,9 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 import java.io.*;
 import java.util.*;
-import tsgui.*;
-import simulator.FuncionalUnit;
-import simulator.CDB;
+import com.aperturelabs.app.tsgui.*;
+import com.aperturelabs.app.simulator.*;
 
 public class Simulator {
     // both of these are for the GUI
@@ -27,13 +26,13 @@ public class Simulator {
 
         boolean halt = false;
         // Instiate FUs
-        FuncionalUnit[] functionalUnits = {
-                new IntegerUnit(),
-                new BranchUnit(),
-                new MemoryUnit(),
-                new FPAddUnit(),
-                new FPMultUnit(),
-                new FPDivUnit(),
+        FunctionalUnit[] functionalUnits = {
+                //new IntegerUnit(),
+                //new BranchUnit(),
+                //new MemoryUnit(),
+                //new FPAddUnit(),
+                //new FPMultUnit(),
+                //new FPDivUnit(),
         };
 
         // TODO: Detect when stall is called for,
@@ -43,7 +42,7 @@ public class Simulator {
             boolean stall = true;
 
             // ISSUE //
-            for (FuncionalUnit fu : functionalUnits) {
+            for (FunctionalUnit fu : functionalUnits) {
                 stall = stall && fu.tryIssueInstruction(instruction);
                 // TODO: At this point, we need to check if the instruction issues was a halt.
                 // When we issue a halt, we need to stop issueing instrucdtions and wait for the
@@ -52,17 +51,17 @@ public class Simulator {
 
             // EXECUTE //
             // Reserveration stations need to pull in new data before we execute
-            for (FuncionalUnit fu : functionalUnits) {
+            for (FunctionalUnit fu : functionalUnits) {
                 fu.updateReservationStations(cdb);
             }
 
             // Actually execute a single cycle
-            for (FuncionalUnit fu : functionalUnits) {
+            for (FunctionalUnit fu : functionalUnits) {
                 fu.execute();
             }
 
             // WRITEBACK //
-            for (FuncionalUnit fu : functionalUnits) {
+            for (FunctionalUnit fu : functionalUnits) {
                 fu.cdbWrite();
             }
 

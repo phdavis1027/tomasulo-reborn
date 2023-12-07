@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 public class Clock {
 	int time; // time in cycles

@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 //This class is incomplete.  You'll need functions
 //for getting and setting registers and updating the

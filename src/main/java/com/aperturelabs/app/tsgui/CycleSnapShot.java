@@ -7,12 +7,12 @@
  * Author: 	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import simulator.*;
-import tsgui.FUnitImage;
+import com.aperturelabs.app.simulator.*;
+import com.aperturelabs.app.tsgui.*;
 
 /***
  * Container class to store all relevant information about a given clock cycle in

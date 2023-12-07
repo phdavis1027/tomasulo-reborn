@@ -6,7 +6,7 @@
  * Author:	Stephen Ellison, Jr.
  */
 
-package tsgui;
+package com.aperturelabs.app.tsgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
-import simulator.Simulator;
+import com.aperturelabs.app.simulator.Simulator;
 
 
 public class TSGui extends JFrame implements ActionListener{

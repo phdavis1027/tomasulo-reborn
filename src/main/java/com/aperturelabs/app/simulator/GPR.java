@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 // General Purpose Registers
 public class GPR extends Registers
