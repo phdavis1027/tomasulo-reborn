@@ -92,6 +92,7 @@ public abstract class FunctionalUnit {
         if ((i = this.findInstructionToWrite()) == -1)
             return;
         Station station = this.reservationStations.get(i);
+        StatusTable.getInstance().updateWrite(station.name);
 
         cdb.busy = true;
         cdb.source = station.name;
