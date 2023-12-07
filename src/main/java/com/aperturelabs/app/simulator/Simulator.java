@@ -38,9 +38,12 @@ public class Simulator {
         // TODO: Detect when stall is called for,
         // that is, when no functional unit was able to accept the instruction
         CDB cdb = CDB.getInstance();
+	Memory memory = Memory.getInstance();
+	Simulator.loadInstructionsIntoMemory(input);
+
         while (halt == false) {
             boolean stall = true;
-	    instruction = Simulator.parseInstruction(input.nextLine());
+	    instruction = Memory.getInstance().load32BitWord(PC);
             // ISSUE //
             for (FunctionalUnit fu : functionalUnits) {
                 stall = stall && fu.tryIssueInstruction(instruction);
@@ -91,6 +94,15 @@ public class Simulator {
 
     static int parseInstruction(String line) {
         return Integer.parseInt(line.substring(0, line.indexOf('#')));
+    }
+
+    static void loadInstructionsIntoMemory(Scanner instructions) {
+	    Memory mem = Memory.getInstance();
+	    int addr = 0;
+	    while(instructions.hasNextLine()) {
+		mem.store32BitWord(addr, Simulator.parseInstruction(instructions.nextLine()));
+		addr += 4;
+	    }
     }
 
     // You'll need to modify this method to use the GUI
