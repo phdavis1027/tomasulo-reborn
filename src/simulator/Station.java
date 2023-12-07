@@ -24,7 +24,9 @@ public class Station
         resultWritten = false;
     }
  
-    //after result is written, clear the reservation station
+    /**
+     * After result is written, clear the reservation station
+     */
     public void clear()
     {
         busy = false;
@@ -35,15 +37,19 @@ public class Station
         resultWritten = false;
     }
 
-    //determines whether the operands are available and therefore ready
-    //for execution
+    /**
+     * determines whether the operands are available and therefore ready for
+     * execution
+     */
     public boolean ready()
     {
         return (busy == true && Qj == null && Qk == null && 
                 resultReady == false);
     }
 
-    //outputs the contents of the Station
+    /**
+     * outputs the contents of the Station
+     */
     public void dump()
     {
         System.out.print(Tools.pad(name, 8, " ", Direction.RIGHT));
@@ -68,6 +74,9 @@ public class Station
         System.out.println(Tools.pad(Long.toHexString(A), 16, "0", Direction.RIGHT));
     }
 
+    /**
+     * Prints the header for the reservation station
+     */
     public static void dumpHeader()
     {        
         System.out.print(Tools.pad("Name", 8, " ", Direction.RIGHT));
