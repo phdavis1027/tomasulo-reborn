@@ -40,7 +40,7 @@ public class Simulator {
         CDB cdb = CDB.getInstance();
         while (halt == false) {
             boolean stall = true;
-
+	    instruction = Simulator.parseInstruction(input.nextLine());
             // ISSUE //
             for (FunctionalUnit fu : functionalUnits) {
                 stall = stall && fu.tryIssueInstruction(instruction);
@@ -66,8 +66,8 @@ public class Simulator {
             }
 
             if (!stall) {
-                // TODO: Get next instruction
-                PC++;
+		
+                PC += 32;
             }
 
             cdb.busy = false;

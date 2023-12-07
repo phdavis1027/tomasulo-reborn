@@ -64,7 +64,13 @@ public abstract class FunctionalUnit {
 	/**
 	 * Update the reservation stations with the result from the CDB
 	 */
-	public void updateReservationStations(CDB cdb) {
+	public void updateReservationStations() {
+		CDB cdb = CDB.getInstance();
+
+
+		// TODO: Get put 
+		// Check CDB. Also, if this makes the instruction ready to execute,
+		// update state to reflect that. 
 		for (Station station : this.reservationStations) {
 			if (station.Qj == cdb.source) {
 				station.Vj = cdb.data;
@@ -72,6 +78,7 @@ public abstract class FunctionalUnit {
 			if (station.Qk == cdb.source) {
 				station.Vk = cdb.data;
 			}
+			station.
 		}
 	}
 

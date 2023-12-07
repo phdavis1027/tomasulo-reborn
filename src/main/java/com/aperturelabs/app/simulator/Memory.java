@@ -1,5 +1,6 @@
 package com.aperturelabs.app.simulator;
 import java.io.*;
+import java.nio.ByteBuffer;
 
 //This class is incomplete.  You'll still need methods for
 //loading memory and getting and setting 32 and 64 bit
@@ -23,6 +24,19 @@ public class Memory
         return mem;
     }
 
+    public boolean load32BitWord(int address, int word) {
+	if (address + 32 >= 400)
+		return false;
+	ByteBuffer buf = ByteBuffer.allocate(4);
+	buf.putInt(word);
+
+	int i = 0;
+	for (byte b : buf.array()) {
+		mem.memory[address + i] = b;	
+		++i;
+	}
+	return true;
+    }
 
     //helper function for dumping memory
     private String buildLine(int i)
