@@ -11,4 +11,20 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>com.aperturelabs.app.Tomasulo</mainClass>
+                    <arguments>
+                        <arguments>input.hex</arguments>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
