@@ -124,15 +124,19 @@ public abstract class FunctionalUnit {
 
 	public abstract Set<String> operations();
 
+	/**
+	 * Needs FU-specific logic to get arguments out of the instruction
+	 */
+	public abstract void issue(Station station, int instruction, int pc);
+
 	/*
+
 	 * Default implementation returns nothing.
 	 * Only functional units for opcode == 0 will have this.
 	 */
 	public Set<String> functions() {
 		return nullFunctionCodes;
 	}
-
-	public abstract void issue(Station station, int pc);
 
 	/**
 	 * Try to issue an instruction to the reservation stations
@@ -148,7 +152,7 @@ public abstract class FunctionalUnit {
 		// TODO: Actually issue the instruction to a station
 		int availableStationIdx = this.findInstructionToExecute();
 		Station availableStation = this.reservationStations.get(availableStationIdx);
-		this.issue(availableStation, pc);
+		this.issue(availableStation, instruction, pc);
 
 		return true;
 	}

@@ -17,7 +17,7 @@ public class Adder extends FunctionalUnit {
 			"DADD",
 			"DSUB"
 	};
-	public static final Set<String> FUNCS = new HashSet<>(Arrays.asList(OP_VALUES));
+	public static final Set<String> FUNCS = new HashSet<>(Arrays.asList(FUNC_VALUES));
 
 	@Override
 	public long computeResult(Station station) {
@@ -29,6 +29,11 @@ public class Adder extends FunctionalUnit {
 			default:
 				return 0;
 		}
+	}
+
+	@Override
+	public void issue(Station station, int instruction, int pc) {
+			
 	}
 
 	@Override
