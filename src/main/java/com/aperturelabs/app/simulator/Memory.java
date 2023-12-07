@@ -24,8 +24,8 @@ public class Memory
         return mem;
     }
 
-    public boolean load32BitWord(int address, int word) {
-	if (address + 32 >= 400)
+    public boolean store32BitWord(int address, int word) {
+	if (address + 4 >= 4000)
 		return false;
 	ByteBuffer buf = ByteBuffer.allocate(4);
 	buf.putInt(word);
@@ -38,8 +38,8 @@ public class Memory
 	return true;
     }
 
-    public boolean load64BitWord(int address, long word) {
-	if (address + 64 >= 400)
+    public boolean store64BitWord(int address, long word) {
+	if (address + 8 >= 4000)
 		return false;
 	ByteBuffer buf = ByteBuffer.allocate(4);
 	buf.putDouble(word);
@@ -50,6 +50,28 @@ public class Memory
 		++i;
 	}
 	return true;
+    }
+
+    public long load64BitWord(int address) {
+	    if (address < 0 || address + 8  >= 4000) 
+		    return -1;
+
+	    long res = 0;
+	    for (int i = 0; i < 8; ++i)
+		    res += mem.memory[address + i] << (i * 8);
+
+	    return res;
+    }
+
+    public int load32BitWord(int address) {
+	    if (address < 0 || address + 4 >= 4000) 
+		    return -1;
+
+	    int res = 0;
+	    for (int i = 0; i < 4; ++i)
+		    res += mem.memory[address + i] << (i * 8);
+
+	    return res;
     }
 
     //helper function for dumping memory
