@@ -46,7 +46,7 @@ public class Simulator {
 	    instruction = Memory.getInstance().load32BitWord(PC);
             // ISSUE //
             for (FunctionalUnit fu : functionalUnits) {
-                stall = stall && fu.tryIssueInstruction(instruction);
+                stall = stall && fu.tryIssueInstruction(instruction, PC);
                 // TODO: At this point, we need to check if the instruction issues was a halt.
                 // When we issue a halt, we need to stop issueing instrucdtions and wait for the
                 // reservation stations to empty out.

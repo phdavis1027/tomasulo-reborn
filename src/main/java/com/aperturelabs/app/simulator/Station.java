@@ -22,6 +22,11 @@ public class Station {
         resultReady = false;
         resultWritten = false;
     }
+    
+    public void issue(String operation) {
+	    this.busy = true;
+	    this.operation = operation; 
+    }
 
     /**
      * After result is written, clear the reservation station

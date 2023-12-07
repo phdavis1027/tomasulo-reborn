@@ -27,6 +27,7 @@ public abstract class FunctionalUnit {
 
 	/**
 	 * Perform a signle clock cycle of execution on the current insturction
+	 * TODO: Save currently executing instruction, if there be one.
 	 */
 	public void execute() {
 		Station station;
@@ -131,16 +132,24 @@ public abstract class FunctionalUnit {
 		return nullFunctionCodes;
 	}
 
+	public abstract void issue(Station station, int pc);
+
 	/**
 	 * Try to issue an instruction to the reservation stations
 	 */
-	public boolean tryIssueInstruction(int instruction) {
+	public boolean tryIssueInstruction(int instruction, int pc) {
 		String opcode = Tools.opcode(instruction);
 		if (!this.operations().contains(opcode))
 			return false;
 		if (opcode == "ARITHMETIC_TYPE" && !this.functions().contains(Tools.functionCode(instruction))) {
 			return false;
 		}
+
+		// TODO: Actually issue the instruction to a station
+		int availableStationIdx = this.findInstructionToExecute();
+		Station availableStation = this.reservationStations.get(availableStationIdx);
+		this.issue(availableStation, pc);
+
 		return true;
 	}
 }
