@@ -1,3 +1,5 @@
+package simulator;
+
 public abstract class FuncionalUnit {
 	private ArrayList<Station> reservationStations;	
 	private int exCyclesNeeded;
@@ -88,4 +90,5 @@ public abstract class FuncionalUnit {
 	}
 
 	public abstract long computeResult(Station station);
+	public abstract boolean tryIssueInstruction();
 }
