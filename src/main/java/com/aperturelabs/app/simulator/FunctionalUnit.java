@@ -50,6 +50,15 @@ public abstract class FunctionalUnit {
 	}
 
 	/**
+	 * Dump the contents of the reservation stations
+	 */
+	public void dump() {
+
+		for (Station station : this.reservationStations)
+			station.dump();
+	}
+
+	/**
 	 * Find the next instruction to write to the CDB
 	 */
 	public int findInstructionToWrite() {
@@ -68,10 +77,9 @@ public abstract class FunctionalUnit {
 	public void updateReservationStations() {
 		CDB cdb = CDB.getInstance();
 
-
-		// TODO: Get put 
+		// TODO: Get put
 		// Check CDB. Also, if this makes the instruction ready to execute,
-		// update state to reflect that. 
+		// update state to reflect that.
 		for (Station station : this.reservationStations) {
 			if (station.Qj == cdb.source) {
 				station.Vj = cdb.data;
@@ -79,17 +87,7 @@ public abstract class FunctionalUnit {
 			if (station.Qk == cdb.source) {
 				station.Vk = cdb.data;
 			}
-			station.
 		}
-	}
-
-	/**
-	 * Dump the contents of the reservation stations
-	 */
-	public void dump() {
-
-		for (Station station : this.reservationStations)
-			station.dump();
 	}
 
 	/**
@@ -103,6 +101,7 @@ public abstract class FunctionalUnit {
 		if ((i = this.findInstructionToWrite()) == -1)
 			return;
 		Station station = this.reservationStations.get(i);
+		StatusTable.getInstance().updateWrite(station.name);
 
 		cdb.busy = true;
 		cdb.source = station.name;
@@ -130,7 +129,7 @@ public abstract class FunctionalUnit {
 	public abstract void issue(Station station, int instruction, int pc);
 
 	/*
-
+	 * 
 	 * Default implementation returns nothing.
 	 * Only functional units for opcode == 0 will have this.
 	 */
