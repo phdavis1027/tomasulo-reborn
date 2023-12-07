@@ -29,16 +29,25 @@ public class Registers {
     /**
      * Get the value from the register file.
      *
-     * @return The register to get the value from. If -1 is returned,
-     *         getRegQi(ref) should be called to get the reservation station that
-     *         will be producing the expected value.
+     * @return The register value.
      */
     public long getReg(int reg) {
         if (Qi[reg] != null) {
-            return -1;
+            throw new RuntimeException("Register " + reg + " is not ready.");
         } else {
             return Regs[reg];
         }
+    }
+
+    /**
+     * Get the functional unit that will be producing the expected value.
+     *
+     * @return The functional unit computing the requested value. If `null` is
+     *         returned, then it's safe to directly pull out the register value with
+     *         getReg(reg).
+     */
+    public String getRegQi(int reg) {
+        return Qi[reg];
     }
 
     /**
@@ -54,13 +63,6 @@ public class Registers {
                 Qi[i] = null;
             }
         }
-    }
-
-    /**
-     * Get the functional unit that will be producing the expected value.
-     */
-    public String getRegQi(int reg) {
-        return Qi[reg];
     }
 
     // output contents of Register File
