@@ -38,6 +38,20 @@ public class Memory
 	return true;
     }
 
+    public boolean load64BitWord(int address, long word) {
+	if (address + 64 >= 400)
+		return false;
+	ByteBuffer buf = ByteBuffer.allocate(4);
+	buf.putDouble(word);
+
+	int i = 0;
+	for (byte b : buf.array()) {
+		mem.memory[address + i] = b;	
+		++i;
+	}
+	return true;
+    }
+
     //helper function for dumping memory
     private String buildLine(int i)
     {
