@@ -8,13 +8,14 @@ public class Simulator
     //both of these are for the GUI 
     boolean gui;
     private ArrayList<CycleSnapShot> snapshots = null;
+    private Scanner input;
 
 
     public Simulator(String file, boolean flag) throws IOException
     {
         //create your functional units in here
-        System.out.println("In constructor!");
         gui = flag;
+	input = new Scanner(new File(file));
     }
 
     public void simulate()
@@ -28,18 +29,23 @@ public class Simulator
         boolean halt = false;
         //this will be your driver loop which will execute until
         //the halt is executed
+	// TODO:Load instructions from file into mem
 	// TODO: Instantiate CDB
 	// TODO: Instiate FUs 
 	// TODO: Detect when stall is called for, 
 	// that is, when no functional unit was able to accept the instruction
 	CDB cdb = CDB.getInstance();
+	ArrayList<FunctionalUnit> FUs = new ArrayList();
         while (halt == false)
         {
+	    // SAFETY: The file will go on until we get a halt. If halt
+	    // is false, we haven't reached EOF.
+	    instruction = Simulator.parseInstruction(input.nextLine());
 	    boolean stall = true;
 	    // ISSUE
-	    // for (FU fu : FUS) {
-	    // 	stall =  stall && fu.tryIssueInstruction(instruction)
-	    // }
+	    for (FunctionalUnit fu : FUs) {
+		    stall =  stall && fu.tryIssueInstruction(instruction);
+	    }
 	    // EXECUTE
 	    // TODO: Check FUs for values to write on the CDB, but only one
 	    // for (FU fu : FUS) {
@@ -95,6 +101,10 @@ public class Simulator
 
 */
           return list;
+     }
+
+     static int parseInstruction(String line) {
+	return Integer.parseInt(line.substring(0, line.indexOf('#')));
      }
 }
 
