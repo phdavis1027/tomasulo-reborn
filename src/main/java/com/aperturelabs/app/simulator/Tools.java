@@ -3,14 +3,16 @@ package simulator;
 public class Tools
 {
 
-    public static final String ARITHMETIC = "ARITHMETIC_TYPE";
+    public static final String ARITHMETIC = "ARITHMETIC";
     public static final String ADD_IMMEDIATE = "ADD_IMMEDIATE";
     public static final String ADD_IMMEDIATE_UNSIGNED = "ADD_IMMEDIATE_UNSIGNED";
 
     public static final String DADD = "DADD";
     public static final String DSUB = "DSUB"; 
-    public static final String MULD = "MUL.D";
-    public static final String DIVD = "DIV.D";
+    public static final String ADD_DOT_D = "ADD.D";
+    public static final String SUB_DOT_D = "SUB.D";
+    public static final String MUL_DOT_D = "MUL.D";
+    public static final String DIV_DOT_D = "DIV.D";
 
     public static String opcode(int instruction) {
 	switch((instruction & 0xFF000000) >> 24) {
@@ -20,14 +22,15 @@ public class Tools
 			return ADD_IMMEDIATE;
 		case 0x25:
 			return ADD_IMMEDIATE_UNSIGNED;
+		// TODO: Add other opcodes
 		default:
 			return  "";
 	}
     }
 
     public static String functionCode(int instruction) { 
-	    String opcode = Tools.opcode();
-	    if (!Tools.opcode(instruction) != "ARITHMETIC_TYPE") 
+	    String opcode = Tools.opcode(instruction);
+	    if (opcode != "ARITHMETIC_TYPE") 
 		return "";
 
 	    switch ((instruction & 0x00FF0000) >> 16) {
@@ -36,9 +39,15 @@ public class Tools
 		case 0x46:
 			return DSUB;
 		case 0x47:
-			return ;
-
-
+			return ADD_DOT_D;
+		case 0x48:
+			return SUB_DOT_D;
+		case 0x49:
+			return MUL_DOT_D;
+		case 0x50:
+			return DIV_DOT_D;
+		default:
+			return "";
 	    }
     }
 

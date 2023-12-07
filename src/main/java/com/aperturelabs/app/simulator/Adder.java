@@ -1,4 +1,4 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
 public class Adder extends FunctionalUnit {
 	@Override

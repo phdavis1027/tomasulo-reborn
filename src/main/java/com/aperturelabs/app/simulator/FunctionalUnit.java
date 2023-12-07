@@ -1,6 +1,8 @@
-package simulator;
+package com.aperturelabs.app.simulator;
 
-public abstract class FuncionalUnit {
+import java.util.ArrayList;
+
+public abstract class FunctionalUnit {
     private ArrayList<Station> reservationStations;
     private int exCyclesNeeded;
     private int currentInstruction;
