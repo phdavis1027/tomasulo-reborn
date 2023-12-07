@@ -20,7 +20,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import simulator.*;
+import com.aperturelabs.app.simulator.*;
 
 public class MemPanel extends JPanel {
 

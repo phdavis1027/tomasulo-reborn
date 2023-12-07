@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
-import simulator.*;
+import com.aperturelabs.app.simulator.*;
 
 public class FunctionalUnit extends JPanel implements MouseListener{
 
