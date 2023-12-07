@@ -1,94 +1,115 @@
 package simulator;
 
 public abstract class FuncionalUnit {
-	private ArrayList<Station> reservationStations;	
-	private int exCyclesNeeded;
-	private int currentInstruction;
-	private boolean busy;
-	private int cyclesLeft;
+    private ArrayList<Station> reservationStations;
+    private int exCyclesNeeded;
+    private int currentInstruction;
+    private boolean busy;
+    private int cyclesLeft;
 
-	// TODO: Write a clockCycle method to capture everything that should on a clock tick
-    //
-	// no cycle high/cycle low, that's for nerds
-	
-	public boolean tick(CDB cdb) {
-        // Also need to pull arguments off the CDB for reservation stations
-        this.updateReservationStations(cdb);
+    /**
+     * Find the next reservation station to execute an instruction from.
+     */
+    public int findInstructionToExecute() {
+        for (int i = 0; i < this.reservationStations.size(); ++i) {
+            if (reservationStations.get(i).ready()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-		if (!cdb.busy) {
-		}
-	}
+    /**
+     * Perform a signle clock cycle of execution on the current insturction
+     */
+    public void execute() {
+        Station station;
+        if (!this.busy) {
+            int i;
+            if ((i = this.findInstructionToExecute()) != -1) {
+                this.currentInstruction = i;
+                this.busy = true;
+                this.cyclesLeft = this.exCyclesNeeded;
+                station = this.reservationStations.get(i);
+                StatusTable.getInstance().addInstruction(station.operation, station.name);
+            }
+        } else if (--this.cyclesLeft == 0) {
+            station = this.reservationStations.get(this.currentInstruction);
+            station.resultReady = true;
+            int result = this.computeResult(station);
+            StatusTable.getInstance().updateEndEX(station.name);
+        }
+    }
 
-	public int findInstructionToExecute() {
-		for (int i = 0; i < this.reservationStations.size(); ++i) {
-            // TODO: Need to check if the instruction has all it's parameters before executing
-			if (!reservationStations.get(i).busy) {
-				return i;	
-			}
-		}
-		return -1;
-	}
-	
-	public void execute() {
-		Station station;
-		if (!this.busy) {
-			int i;
-			if ((i = this.findInstructionToExecute()) != -1) {
-				this.currentInstruction = i;
-				this.busy = true;
-				this.cyclesLeft = this.exCyclesNeeded;
-				station = this.reservationStations.get(i);
-				// TODO: Is station.operation the correct thing to pass here?
-				StatusTable.getInstance().addInstruction(station.operation, station.name);
-			} 
-		} else if (--this.cyclesLeft == 0){
-				station = this.reservationStations.get(this.currentInstruction);
-				station.resultReady = true;
-				int result = this.computeResult(station);
-				StatusTable.getInstance().updateEndEX(station.name);
-		}
-	}
+    /**
+     * Find the next instruction to write to the CDB
+     */
+    public int findInstructionToWrite() {
+        for (int i = 0; i < this.reservationStations.size(); ++i) {
+            Station station = this.reservationStations.get(i);
+            if (s.resultReady && !s.resultWritten) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-	public int findInstructionToWrite() {
-		for (int i = 0; i < this.reservationStations.size(); ++i)
-			if (this.reservationStations.get(i).resultReady) 
-				return i;
-		return -1;
-	}
+    /**
+     * Update the reservation stations with the result from the CDB
+     */
+    public void updateReservationStations(CDB cdb) {
+        for (Station station : this.reservationStations) {
+            if (station.Qj == cdb.source) {
+                station.Vj = cdb.data;
+            }
+            if (station.Qk == cdb.source) {
+                station.Vk = cdb.data;
+            }
+        }
+    }
 
-	public void updateReservationStations(CDB cdb) {
-		for (Station station : this.reservationStations) {
-			if (station.Qj == cdb.source) {
-				station.Vj = cdb.data;
-			} 
-			if (station.Qk == cdb.source) {
-				station.Vk = cdb.data;
-			}
-		}
-	}
-	public void dump() {
+    /**
+     * Dump the contents of the reservation stations
+     */
+    public void dump() {
 
-		for (Station station : this.reservationStations) 
-			station.dump();
-	}
+        for (Station station : this.reservationStations)
+            station.dump();
+    }
 
-	public void cdbWrite() {
-		if (cdb.busy)
-			return;
-		int i;
-		if ((i = this.findInstructionToWrite()) == -1) 
-			return;
-		Station station = this.reservationStations.get(i);
+    /**
+     * Write the result of the current instruction to the CDB
+     */
+    public void cdbWrite() {
+        if (cdb.busy)
+            return;
+        int i;
+        if ((i = this.findInstructionToWrite()) == -1)
+            return;
+        Station station = this.reservationStations.get(i);
 
-		CDB cdb = CDB.getInstance();
-		if (cdb.busy)
-			return;
+        CDB cdb = CDB.getInstance();
+        if (cdb.busy)
+            return;
 
-		cdb.busy = true;	
-		cdb.source = station.name;
-		cdb.data = station.result;
-	}
+        cdb.busy = true;
+        cdb.source = station.name;
+        cdb.data = station.result;
+        // Reset the station for the next instruction
+        station.clear();
+    }
 
-	public abstract long computeResult(Station station);
-	public abstract boolean tryIssueInstruction();
+    /**
+     * Compute the result of the current instruction
+     *
+     * This should be reimplemented in the concrete classes
+     */
+    public abstract long computeResult(Station station);
+
+    /**
+     * Try to issue an instruction to the reservation stations
+     *
+     * This should be reimplemented in the concrete classes
+     */
+    public abstract boolean tryIssueInstruction();
 }
