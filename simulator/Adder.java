@@ -1,6 +1,13 @@
 public class Adder extends FunctionalUnit {
 	@Override
 	public long computeResult(Station station) {
-		if (station.operation == "")
+        switch (station.operation) {
+            case "ADD":
+                return station.Vj + station.Vk;
+            case "SUB":
+                return station.Vj - station.Vk;
+            default:
+                return 0;
+        }
 	}
 }
