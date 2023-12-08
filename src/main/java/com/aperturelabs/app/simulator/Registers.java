@@ -11,7 +11,8 @@ public class Registers {
 
     public static Registers instance = null;
 
-    private Registers() {
+    // Protected so it doesn't break implementations of FPR and GPR
+    protected Registers() {
         int i;
         Regs = new long[REGS];
         Qi = new String[REGS];

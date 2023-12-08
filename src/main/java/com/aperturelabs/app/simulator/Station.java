@@ -30,6 +30,10 @@ public class Station {
     public void issue(String operation, long Vj, long Vk, String Qj, String Qk) {
 	    this.busy = true;
 	    this.operation = operation; 
+	    this.Vj = Vj;
+	    this.Vk = Vk;
+	    this.Qj = Qj;
+	    this.Qk = Qk;
     }
 
     /**
