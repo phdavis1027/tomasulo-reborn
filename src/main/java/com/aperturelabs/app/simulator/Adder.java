@@ -33,7 +33,23 @@ public class Adder extends FunctionalUnit {
 
 	@Override
 	public void issue(Station station, int instruction, int pc) {
-			
+		// Get arguments from instruction		
+		String operation = Tools.opcode(instruction);
+
+		long Vj, Vk;
+		int srcReg;
+		String Qj, Qk;
+
+		switch(operation) {
+			case Tools.ADD_IMMEDIATE:
+			case Tools.ADD_IMMEDIATE_UNSIGNED:
+				Vk = instruction & 0x0000FFFF;
+				srcReg = (instruction & 0x03E00000) >> 21;
+				break;
+		}
+
+
+		station.issue();
 	}
 
 	@Override
