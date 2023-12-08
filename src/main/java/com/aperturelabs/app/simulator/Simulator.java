@@ -95,7 +95,9 @@ public class Simulator {
     }
 
     static int parseInstruction(String line) {
-        return Integer.parseInt(line.substring(0, line.indexOf('#')));
+	if (line.indexOf('#') != -1) 
+		return Integer.parseInt(line.substring(0, line.indexOf('#')));
+	return Integer.parseInt(line);
     }
 
     static void loadInstructionsIntoMemory(Scanner instructions) {
