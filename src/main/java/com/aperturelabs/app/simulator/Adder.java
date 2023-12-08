@@ -1,10 +1,9 @@
 package com.aperturelabs.app.simulator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.aperturelabs.app.tsgui.Register;
 
 public class Adder extends FunctionalUnit {
 	public static final String[] OP_VALUES = new String[] {
@@ -20,6 +19,15 @@ public class Adder extends FunctionalUnit {
 			"DSUB"
 	};
 	public static final Set<String> FUNCS = new HashSet<>(Arrays.asList(FUNC_VALUES));
+
+	public Adder() {
+		this.reservationStations = new ArrayList<Station>(Arrays.asList(
+				new Station[] {
+						new Station("Integer0"),
+						new Station("Integer1"),
+						new Station("Integer2")
+				}));
+	}
 
 	@Override
 	public long computeResult(Station station) {
@@ -62,12 +70,12 @@ public class Adder extends FunctionalUnit {
 			case Tools.ARITHMETIC:
 				// Determine function code
 				String function = Tools.functionCode(instruction);
-				if (function == Tools.DADD) 
+				if (function == Tools.DADD)
 					operation = "ADD";
-				else if (function == Tools.DSUB) 
+				else if (function == Tools.DSUB)
 					operation = "SUB";
-				else 
-					throw new RuntimeException("Invalid function code in Adder.");	
+				else
+					throw new RuntimeException("Invalid function code in Adder.");
 				// Determine srcReg1
 				srcRegOne = (instruction & 0x03E00000) >> 21;
 				if (registers.getRegQi(srcRegOne) != null) {
