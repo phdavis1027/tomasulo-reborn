@@ -27,7 +27,7 @@ public class Station {
      * This function has no error checking because the FunctionalUnit is responsible
      * for making sure that the instruction is ready to issue. See FunctionalUnit.issue
      */
-    public void issue(String operation, long Vj, long Vk, long Qj, long Qk) {
+    public void issue(String operation, long Vj, long Vk, String Qj, String Qk) {
 	    this.busy = true;
 	    this.operation = operation; 
     }

@@ -10,13 +10,11 @@ public class Simulator {
     boolean gui;
     private ArrayList<CycleSnapShot> snapshots = null;
     private Scanner input;
-    private Registers registers;
 
     public Simulator(String file, boolean flag) throws IOException {
         // create your functional units in here
         gui = flag;
         input = new Scanner(new File(file));
-        this.registers = new Registers();
     }
 
     public void simulate() {
@@ -40,6 +38,7 @@ public class Simulator {
         // TODO: Detect when stall is called for,
         // that is, when no functional unit was able to accept the instruction
         CDB cdb = CDB.getInstance();
+	Registers registers = Registers.getInstance();
 	Memory memory = Memory.getInstance();
 	Simulator.loadInstructionsIntoMemory(input);
 
@@ -57,7 +56,7 @@ public class Simulator {
             // EXECUTE //
             // Reserveration stations need to pull in new data before we execute
             for (FunctionalUnit fu : functionalUnits) {
-                fu.updateReservationStations(cdb);
+                fu.updateReservationStations();
             }
             registers.readCDB();
 

@@ -9,7 +9,9 @@ public class Registers {
     protected String[] Qi;
     static final int REGS = 32;
 
-    public Registers() {
+    public static Registers instance = null;
+
+    private Registers() {
         int i;
         Regs = new long[REGS];
         Qi = new String[REGS];
@@ -17,6 +19,12 @@ public class Registers {
             Regs[i] = 0;
             Qi[i] = null;
         }
+    }
+
+    public static Registers getInstance() {
+	if (instance == null)
+		instance = new Registers();
+	return instance;
     }
 
     /**

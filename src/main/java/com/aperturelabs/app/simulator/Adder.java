@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.aperturelabs.app.tsgui.Register;
+
 public class Adder extends FunctionalUnit {
 	public static final String[] OP_VALUES = new String[] {
 			"DADDI",
@@ -35,6 +37,7 @@ public class Adder extends FunctionalUnit {
 	public void issue(Station station, int instruction, int pc) {
 		// Get arguments from instruction		
 		String operation = Tools.opcode(instruction);
+		Registers registers = Registers.getInstnac
 
 		long Vj, Vk;
 		int srcReg;
@@ -49,7 +52,7 @@ public class Adder extends FunctionalUnit {
 		}
 
 
-		station.issue();
+		station.issue(operation, Vj, Vk, Qj, Qk);
 	}
 
 	@Override
