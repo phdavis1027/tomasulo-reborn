@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class FunctionalUnit {
-	private ArrayList<Station> reservationStations;
+	protected ArrayList<Station> reservationStations;
 	private int exCyclesNeeded;
 	private int currentInstruction;
 	private boolean busy;
